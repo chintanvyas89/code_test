@@ -59,7 +59,7 @@ class GetNode extends ControllerBase {
     if(is_numeric($nid)) {
       $node_obj = Node::load($nid);
       $stored_apikey = $this->configFactory->get('system.site')->get('siteapikey');
-
+      // If node type is page and apikey matches then set $access to true.
       if($node_obj->getType() == 'page' && $stored_apikey == $apikey) {
         $access = true;
       }
