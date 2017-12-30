@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * Class GetNode.
+ * Class GetNode. Returns appropriate json based on parameters.
  *
  * @package Drupal\code_test\Controller
  */
