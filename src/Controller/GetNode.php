@@ -42,7 +42,7 @@ class GetNode extends ControllerBase {
    * index method.
    *
    * @var $apikey
-   *   Api key stored in config.
+   *   Api key passed as parameter.
    *
    * @var $nid
    *   nid of the node.
