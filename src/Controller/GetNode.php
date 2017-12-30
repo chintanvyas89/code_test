@@ -79,7 +79,6 @@ class GetNode extends ControllerBase {
       // Return access denied response with status code 403 Forbidden.
       return new JsonResponse('access denied', 403, array('Content-Type', 'application/json'));
     }
-
   }
 
 }
