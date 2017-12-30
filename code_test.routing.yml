@@ -1,0 +1,8 @@
+
+code_test.get_node:
+  path: '/page_json/{apikey}/{nid}'
+  defaults:
+    _controller: '\Drupal\code_test\Controller\GetNode::index'
+    _title: 'index'
+  requirements:
+    _permission: 'access content'

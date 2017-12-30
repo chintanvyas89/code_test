@@ -1,0 +1,5 @@
+name: Code Test
+type: module
+description: Adds Apikey field in site information page and provides route for json response of page node.
+core: 8.x
+package: Custom

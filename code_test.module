@@ -1,0 +1,80 @@
+<?php
+
+/**
+ * @file
+ * Contains code for code_test.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function code_test_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the code_test module.
+    case 'help.page.code_test':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Adds Api key field in site information page and provides route for json response of page node.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function code_test_form_system_site_information_settings_alter(&$form, &$form_state) {
+  $site_config =  \Drupal::config('system.site');
+  // New section for Site api custom element
+  $form['site_api'] = [
+    '#type' => 'details',
+    '#title' => t('Site Api key'),
+    '#open' => TRUE,
+  ];
+
+  // Get default api key. If no api key is stored previously then set default
+  // value as 'No API Key yet'.
+  $default_api_key = $site_config->get('siteapikey') == '' ? 'No API Key yet':$site_config->get('siteapikey');
+
+  // Site API Key text field
+  $form['site_api']['siteapikey'] = [
+    '#type' => 'textfield',
+    '#title' => t('Site API Key'),
+    '#description' => t('Site API Key is used for access check while calling
+      routs for getting page node json'),
+    '#default_value' => $default_api_key,
+    '#required' => true,
+  ];
+
+  // Change Save configuration button text to Update Configuration.
+  $form['actions']['submit']['#value'] = t('Update Configuration');
+
+  // Add custom submit handler for saving Apikey.
+  $form['#submit'][] = 'code_test_form_system_site_information_settings_submit';
+  return $form;
+}
+
+/**
+ * Form submission handler for system_site_information_settings form.
+ * Sets siteapikey in drupal config.
+ *
+ * @var $form
+ *   Form array contains render array of the form
+ *
+ * @var $form_state
+ *   Contains form state. Instance of FormStateInterface
+ */
+function code_test_form_system_site_information_settings_submit(array $form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  // Get editable config object.
+  $site_config =  \Drupal::service('config.factory')->getEditable('system.site');
+
+  // Set siteapikey in site config.
+  $site_config->set('siteapikey', $form_state->getValue('siteapikey'))->save();
+
+  // Set success message.
+  $success_message = t('Site API Key has been saved successfully with your value');
+  drupal_set_message($success_message, $type = 'status');
+}
