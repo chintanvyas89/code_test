@@ -47,7 +47,7 @@ class GetNode extends ControllerBase {
    * @var $nid
    *   nid of the node.
    *
-   * @return string
+   * @return JsonResponse
    *   Return Json response with node data with 200 or 403 if do not satisfy the
    *   conditions.
    */
